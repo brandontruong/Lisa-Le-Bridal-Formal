@@ -1,4 +1,6 @@
 
+import React from 'react';
+
 export default function Footer() {
   return (
     <footer className="bg-accent-1 border-t border-accent-2">
@@ -15,14 +17,14 @@ export default function Footer() {
               Read Documentation
             </a>
             <a
-              href={`https://github.com/zeit/next.js/tree/canary/examples/`}
+              href="https://github.com/zeit/next.js/tree/canary/examples/"
               className="mx-3 font-bold hover:underline"
             >
-              View on GitHub 
+              View on GitHub
             </a>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

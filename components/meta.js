@@ -1,5 +1,5 @@
-import Head from 'next/head'
-
+import React from 'react';
+import Head from 'next/head';
 
 export default function Meta() {
   return (
@@ -38,5 +38,5 @@ export default function Meta() {
       />
       <meta property="og:image" content={HOME_OG_IMAGE_URL} /> */}
     </Head>
-  )
+  );
 }

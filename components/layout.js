@@ -1,15 +1,25 @@
-import Footer from '../components/footer'
-import Meta from '../components/meta'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function Layout({ preview, children }) {
+import Footer from './footer';
+import Meta from './meta';
+
+export default function Layout({ children }) {
   return (
     <>
       <Meta />
       <div className="min-h-screen">
-        {/* <Alert preview={preview} /> */}
         <main>{children}</main>
       </div>
       <Footer />
     </>
-  )
+  );
 }
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+Layout.defaultProps = {
+
+};
