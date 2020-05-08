@@ -6,7 +6,7 @@ const About = () => (
     <Link href="/about">
       <a>About Page</a>
     </Link>
-    <p>About page hello</p>
+    <p>About page hello yey</p>
   </div>
 );
 

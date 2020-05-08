@@ -1,12 +1,14 @@
 // This is the Link API
 import Link from 'next/link';
 import ApolloClient from 'apollo-client';
+import Head from 'next/head';
 import { ApolloProvider } from "react-apollo";
 import fetch from 'node-fetch';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
+import Layout from '../components/layout';
 
 const client = new ApolloClient({
   link: createHttpLink({
@@ -48,13 +50,24 @@ const ExchangeRates = () => (
 
 const Index = () => (
   <ApolloProvider client={client}>
-    <div>
+
+      <Layout>
+        <Head>
+          <title>Next.js Blog Example with </title>
+        </Head>
+       <div>
+         <ExchangeRates />
+       </div>
+      </Layout>
+
+
+    {/* <div>
       <Link href="/about">
         <a>About Page yup</a>
       </Link>
       <p>Hello Next.js</p>
       <ExchangeRates />
-    </div>
+    </div> */}
   </ApolloProvider>
 
 );
