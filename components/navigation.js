@@ -19,7 +19,7 @@ const Navigation = () => {
       <ul>
         { nav.map((navItem) => (
           <li key={`nav-${navItem.slug}`}>
-            <Link href={`posts/${navItem.id}`}>
+            <Link href={`pages/${navItem.slug}`}>
               <a>{ navItem.title}</a>
             </Link>
           </li>
