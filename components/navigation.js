@@ -9,6 +9,7 @@ const Navigation = () => {
     fetch(getPages)
       .then((data) => data.json())
       .then((data) => {
+        console.log('=====data=', data);
         setNav(data.map((item) => ({ title: item.title.rendered, id: item.id, slug: item.slug })));
       });
   }, []);
