@@ -48,13 +48,22 @@ const ExchangeRates = () => (
   </Query>
 );
 
-const Index = () => (
+const Index = ({ page }) => (
   <ApolloProvider client={client}>
 
     <Layout>
       <Head>
         <title>Next.js Blog Example with </title>
       </Head>
+      <ul>
+        { page.map((navItem) => (
+          <li key={`nav-${navItem.slug}`}>
+            <Link href={`pages/${navItem.slug}`}>
+              <a>{ navItem.title}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
       <div>
         <ExchangeRates />
       </div>
@@ -70,5 +79,14 @@ const Index = () => (
   </ApolloProvider>
 
 );
+
+export async function getStaticProps(context) {
+  const res = await fetch('http://brandontruong.me/wp-json/wp/v2/pages');
+  const pages = await res.json();
+
+  const test = pages.map((item) => ({ title: item.title.rendered, id: item.id, slug: item.slug }));
+  console.log('=====pages===', test);
+  return { props: { page: test } };
+}
 
 export default Index;
