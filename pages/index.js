@@ -6,9 +6,9 @@ import { ApolloProvider, Query } from 'react-apollo';
 import fetch from 'node-fetch';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-
 import { gql } from 'apollo-boost';
 import Layout from '../components/layout';
+import withNav from '../HOC/withNav';
 
 const client = new ApolloClient({
   link: createHttpLink({
@@ -48,22 +48,14 @@ const ExchangeRates = () => (
   </Query>
 );
 
-const Index = ({ page }) => (
+const Index = ({ navItems }) => (
   <ApolloProvider client={client}>
 
-    <Layout>
+    <Layout navItems={navItems}>
       <Head>
         <title>Next.js Blog Example with </title>
       </Head>
-      <ul>
-        { page.map((navItem) => (
-          <li key={`nav-${navItem.slug}`}>
-            <Link href={`pages/${navItem.slug}`}>
-              <a>{ navItem.title}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
+
       <div>
         <ExchangeRates />
       </div>
@@ -80,13 +72,13 @@ const Index = ({ page }) => (
 
 );
 
-export async function getStaticProps(context) {
-  const res = await fetch('http://brandontruong.me/wp-json/wp/v2/pages');
-  const pages = await res.json();
+// export async function getStaticProps(context) {
+//   const res = await fetch('http://brandontruong.me/wp-json/wp/v2/pages');
+//   const pages = await res.json();
 
-  const test = pages.map((item) => ({ title: item.title.rendered, id: item.id, slug: item.slug }));
-  console.log('=====pages===', test);
-  return { props: { page: test } };
-}
+//   const test = pages.map((item) => ({ title: item.title.rendered, id: item.id, slug: item.slug }));
+//   console.log('=====pages===', test);
+//   return { props: { page: test } };
+// }
 
-export default Index;
+export default withNav(Index);

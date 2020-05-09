@@ -5,12 +5,12 @@ import Footer from './footer';
 import Meta from './meta';
 import Navigataion from './navigation';
 
-export default function Layout({ children }) {
+export default function Layout({ navItems, children }) {
   return (
     <>
       <Meta />
       <div className="min-h-screen">
-        <Navigataion />
+        <Navigataion navItems={navItems} />
         <main>{children}</main>
       </div>
       <Footer />

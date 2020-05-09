@@ -40,10 +40,6 @@ export async function getStaticProps({ params }) {
   const res = await fetch(`http://brandontruong.me/wp-json/wp/v2/pages?slug=${params.slug}`);
   const [page] = await res.json();
 
-  if (isEmpty(page)) {
-    return { props: { page: { title: 'Not found', content: '' } } };
-  }
-
   return { props: { page: { title: page.title.rendered, content: page.content.rendered } } };
 }
 
