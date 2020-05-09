@@ -4,7 +4,7 @@ import Link from 'next/link';
 const About = () => (
   <div>
     <Link href="/about">
-      <a>About Page</a>
+      <a>About Page me</a>
     </Link>
     <p>About page hello yey</p>
   </div>
