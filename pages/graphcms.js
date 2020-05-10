@@ -7,7 +7,7 @@ import fetch from 'node-fetch';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { gql } from 'apollo-boost';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import withNav from '../HOC/withNav';
 
 const client = new ApolloClient({
