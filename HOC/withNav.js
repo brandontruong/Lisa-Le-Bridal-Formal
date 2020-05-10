@@ -2,7 +2,7 @@ import React from 'react';
 import fetch from 'node-fetch';
 
 const withNav = (C) => {
-  class AuthComponent extends React.Component {
+  class NavComponent extends React.Component {
     static async getInitialProps(ctx) {
       const res = await fetch('http://brandontruong.me/wp-json/wp/v2/pages');
       const pages = await res.json();
@@ -26,7 +26,7 @@ const withNav = (C) => {
     }
   }
 
-  return AuthComponent;
+  return NavComponent;
 };
 
 export default withNav;

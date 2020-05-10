@@ -36,13 +36,13 @@ const useStyles = makeStyles({
 
 const appUrl = 'http://brandontruong.me/wp-json/wp/v2/';
 const getPages = `${appUrl}pages`;
-const Navigation = ({ navItems }) => {
+const Navigation = ({ navItems, basePath }) => {
   const classes = useStyles();
   return (
     <ul className={classes.ul}>
       { navItems.map((navItem) => (
         <li className={classes.li}>
-          <Link href={`pages/${navItem.slug}`} key={`nav-${navItem.slug}`}>
+          <Link href={`${basePath}${navItem.slug}`} key={`nav-${navItem.slug}`}>
             <a className={classes.a}>
               <Typography variant="h6" className={classes.title}>
                 {navItem.title}

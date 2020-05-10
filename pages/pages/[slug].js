@@ -1,11 +1,15 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import fetch from 'node-fetch';
-import isEmpty from 'lodash/isEmpty';
+import find from 'lodash/find';
+import Head from 'next/head';
 
-function Page({ page }) {
+import Layout from '../../components/layout';
+
+function Page({ page, navItems, basePath }) {
   const router = useRouter();
 
+  console.log('=======navItems====', navItems);
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) {
@@ -13,10 +17,18 @@ function Page({ page }) {
   }
 
   return (
-    <>
-      <div>{page.title}</div>
-      <div>{page.content}</div>
-    </>
+    <Layout navItems={navItems} basePath={basePath}>
+      <Head>
+        <title>
+          {page.title}
+        </title>
+      </Head>
+      <div>
+        <div>{page.title}</div>
+        <div>{page.content}</div>
+      </div>
+    </Layout>
+
   );
 }
 
@@ -37,10 +49,14 @@ export async function getStaticPaths() {
 
 // This also gets called at build time
 export async function getStaticProps({ params }) {
-  const res = await fetch(`http://brandontruong.me/wp-json/wp/v2/pages?slug=${params.slug}`);
-  const [page] = await res.json();
+  const res = await fetch('http://brandontruong.me/wp-json/wp/v2/pages');
+  const pages = await res.json();
 
-  return { props: { page: { title: page.title.rendered, content: page.content.rendered } } };
+  const navItems = pages.map((item) => ({ title: item.title.rendered, id: item.id, slug: item.slug }));
+
+  const page = find(pages, ['slug', params.slug]);
+
+  return { props: { basePath: '', navItems, page: { title: page.title.rendered, content: page.content.rendered } } };
 }
 
-export default Page;
+export default (Page);

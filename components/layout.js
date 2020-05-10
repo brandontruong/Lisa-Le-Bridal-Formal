@@ -5,12 +5,12 @@ import Footer from './footer';
 import Meta from './meta';
 import Navigataion from './navigation';
 
-export default function Layout({ navItems, children }) {
+export default function Layout({ basePath, navItems, children }) {
   return (
     <>
       <Meta />
       <div className="min-h-screen">
-        <Navigataion navItems={navItems} />
+        <Navigataion navItems={navItems} basePath={basePath} />
         <main>{children}</main>
       </div>
       <Footer />
@@ -20,8 +20,10 @@ export default function Layout({ navItems, children }) {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  basePath: PropTypes.string,
+  navItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 Layout.defaultProps = {
-
+  basePath: 'pages/',
 };
