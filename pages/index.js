@@ -1,10 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
+import PropTypes from 'prop-types';
 import withNav from '../HOC/withNav';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 
-const About = ({ navItems }) => (
+const Index = ({ navItems }) => (
   <Layout navItems={navItems}>
     <Head>
       <title>About page </title>
@@ -19,4 +20,8 @@ const About = ({ navItems }) => (
 
 );
 
-export default withNav(About);
+Index.propTypes = {
+  navItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+};
+
+export default withNav(Index);

@@ -1,14 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-
-import classNames from 'classnames';
 
 const useStyles = makeStyles({
   ul: {
     'list-style-type': 'none',
+    border: 'solid red 1px',
     margin: 0,
     padding: 0,
     overflow: 'hidden',
@@ -34,15 +33,13 @@ const useStyles = makeStyles({
   },
 });
 
-const appUrl = 'http://brandontruong.me/wp-json/wp/v2/';
-const getPages = `${appUrl}pages`;
 const Navigation = ({ navItems, basePath }) => {
   const classes = useStyles();
   return (
     <ul className={classes.ul}>
       { navItems.map((navItem) => (
-        <li className={classes.li}>
-          <Link href={`${basePath}${navItem.slug}`} key={`nav-${navItem.slug}`}>
+        <li className={classes.li} key={`nav-${navItem.slug}`}>
+          <Link href={`${basePath}${navItem.slug}`}>
             <a className={classes.a}>
               <Typography variant="h6" className={classes.title}>
                 {navItem.title}
@@ -54,4 +51,14 @@ const Navigation = ({ navItems, basePath }) => {
     </ul>
   );
 };
+
+Navigation.propTypes = {
+  basePath: PropTypes.string,
+  navItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+};
+
+Navigation.defaultProps = {
+  basePath: 'pages/',
+};
+
 export default Navigation;

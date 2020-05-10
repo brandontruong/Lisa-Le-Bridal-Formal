@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Footer from './footer';
-import Meta from './meta';
-import Navigataion from './navigation';
+import Footer from '../Footer';
+import Meta from '../Meta';
+import Navigataion from '../Navigation';
 
 export default function Layout({ basePath, navItems, children }) {
   return (

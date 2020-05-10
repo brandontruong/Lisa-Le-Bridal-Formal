@@ -1,15 +1,15 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 import fetch from 'node-fetch';
 import find from 'lodash/find';
 import Head from 'next/head';
 
-import Layout from '../../components/layout';
+import Layout from '../../components/Layout';
 
 function Page({ page, navItems, basePath }) {
   const router = useRouter();
 
-  console.log('=======navItems====', navItems);
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) {
@@ -31,6 +31,16 @@ function Page({ page, navItems, basePath }) {
 
   );
 }
+
+Page.propTypes = {
+  page: PropTypes.node.isRequired,
+  basePath: PropTypes.string,
+  navItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+};
+
+Page.defaultProps = {
+  basePath: 'pages/',
+};
 
 // This function gets called at build time
 export async function getStaticPaths() {
