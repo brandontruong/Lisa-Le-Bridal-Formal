@@ -61,24 +61,17 @@ const Index = ({ navItems }) => (
       </div>
     </Layout>
 
-    {/* <div>
-      <Link href="/about">
-        <a>About Page yup</a>
-      </Link>
-      <p>Hello Next.js</p>
-      <ExchangeRates />
-    </div> */}
   </ApolloProvider>
 
 );
 
-// export async function getStaticProps(context) {
-//   const res = await fetch('http://brandontruong.me/wp-json/wp/v2/pages');
-//   const pages = await res.json();
+export async function getStaticProps(context) {
+  const res = await fetch('http://brandontruong.me/wp-json/wp/v2/pages');
+  const pages = await res.json();
 
-//   const test = pages.map((item) => ({ title: item.title.rendered, id: item.id, slug: item.slug }));
-//   console.log('=====pages===', test);
-//   return { props: { page: test } };
-// }
+  const navItems = pages.map((item) => ({ title: item.title.rendered, id: item.id, slug: item.slug }));
 
-export default withNav(Index);
+  return { props: { navItems } };
+}
+
+export default Index;
