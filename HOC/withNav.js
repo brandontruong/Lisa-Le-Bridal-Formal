@@ -8,7 +8,6 @@ const withNav = (C) => {
       const pages = await res.json();
 
       const navItems = pages.map((item) => ({ title: item.title.rendered, id: item.id, slug: item.slug }));
-      console.log('=====pages===', navItems);
 
       // Get component’s props
       let componentProps = {};
