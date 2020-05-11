@@ -11,8 +11,10 @@ const StyledA = styled.a`
   display: block;
   color: white;
   text-align: center;
+  cursor: pointer;
   padding: 14px 16px;
   text-decoration: none;
+  background-color: ${(props) => (props.isActive ? '#111' : 'transparent')};
   :hover {
     background-color: #111;
   },
@@ -28,12 +30,12 @@ const StyledUI = styled.ul`
   top: 0;
 `;
 
-const Navigation = ({ navItems, basePath }) => (
+const Navigation = ({ navItems, activeNav, basePath }) => (
   <StyledUI>
     { navItems.map((navItem) => (
       <StyledLI key={`nav-${navItem.slug}`}>
         <Link href={`${basePath}${navItem.slug}`}>
-          <StyledA>
+          <StyledA isActive={activeNav === navItem.slug}>
             {navItem.title}
           </StyledA>
         </Link>

@@ -7,7 +7,7 @@ import Head from 'next/head';
 
 import Layout from '../../components/Layout';
 
-function Page({ page, navItems, basePath }) {
+function Page({ page, navItems, activeNav, basePath, products }) {
   const router = useRouter();
 
   // If the page is not yet generated, this will be displayed
@@ -17,15 +17,24 @@ function Page({ page, navItems, basePath }) {
   }
 
   return (
-    <Layout navItems={navItems} basePath={basePath}>
+    <Layout navItems={navItems} basePath={basePath} activeNav={activeNav}>
       <Head>
         <title>
           {page.title}
         </title>
       </Head>
       <div>
-        <div>{page.title}</div>
-        <div>{page.content}</div>
+        <div dangerouslySetInnerHTML={{ __html: page.content }} />
+        { products && products.map((product) => (
+          <div>
+            <p>{product.title}</p>
+            <p><img src={product.picture} alt="product image" /></p>
+            <p>
+              <span>Price: </span>
+              {`${product.price} AUD`}
+            </p>
+          </div>
+        )) }
       </div>
     </Layout>
 
@@ -35,11 +44,14 @@ function Page({ page, navItems, basePath }) {
 Page.propTypes = {
   page: PropTypes.node.isRequired,
   basePath: PropTypes.string,
+  activeNav: PropTypes.string.isRequired,
   navItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 Page.defaultProps = {
   basePath: 'pages/',
+  products: undefined,
 };
 
 // This function gets called at build time
@@ -66,7 +78,32 @@ export async function getStaticProps({ params }) {
 
   const page = find(pages, ['slug', params.slug]);
 
-  return { props: { basePath: '', navItems, page: { title: page.title.rendered, content: page.content.rendered } } };
+  let products;
+  if (params.slug === 'products') {
+    const resProducts = await fetch('http://brandontruong.me/wp-json/wp/v2/products');
+    const productsData = await resProducts.json();
+
+    products = productsData.map((product) => ({
+      title: product.title.rendered,
+      picture: product.acf.picture.url,
+      price: product.acf.price,
+    }));
+    return { props: {
+      basePath: '',
+      navItems,
+      activeNav: params.slug,
+      page: { title: page.title.rendered, content: page.content.rendered },
+      products,
+    } };
+  }
+
+  return { props: {
+    basePath: '',
+    navItems,
+    activeNav: params.slug,
+    page: { title: page.title.rendered, content: page.content.rendered },
+
+  } };
 }
 
 export default (Page);

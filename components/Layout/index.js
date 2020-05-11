@@ -5,12 +5,12 @@ import Footer from '../Footer';
 import Meta from '../Meta';
 import Navigataion from '../Navigation';
 
-export default function Layout({ basePath, navItems, children }) {
+export default function Layout({ basePath, navItems, activeNav, children }) {
   return (
     <>
       <Meta />
       <div className="min-h-screen">
-        <Navigataion navItems={navItems} basePath={basePath} />
+        <Navigataion navItems={navItems} basePath={basePath} activeNav={activeNav} />
         <main>{children}</main>
       </div>
       <Footer />
@@ -21,6 +21,7 @@ export default function Layout({ basePath, navItems, children }) {
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   basePath: PropTypes.string,
+  activeNav: PropTypes.string.isRequired,
   navItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
