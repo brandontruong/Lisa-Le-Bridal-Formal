@@ -7,7 +7,7 @@ import Head from 'next/head';
 
 import Layout from '../../components/Layout';
 
-function Page({ page, navItems, activeNav, basePath, products }) {
+function Page({ page, navItems, activeNav, basePath, products, acf }) {
   const router = useRouter();
 
   // If the page is not yet generated, this will be displayed
@@ -25,10 +25,13 @@ function Page({ page, navItems, activeNav, basePath, products }) {
       </Head>
       <div>
         <div dangerouslySetInnerHTML={{ __html: page.content }} />
+        { acf && acf.feature_image && (
+          <p><img src={acf.feature_image.url} alt="feature" /></p>
+        )}
         { products && products.map((product) => (
           <div>
             <p>{product.title}</p>
-            <p><img src={product.picture} alt="product image" /></p>
+            <p><img src={product.picture} alt="product" /></p>
             <p>
               <span>Price: </span>
               {`${product.price} AUD`}
@@ -47,11 +50,13 @@ Page.propTypes = {
   activeNav: PropTypes.string.isRequired,
   navItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   products: PropTypes.arrayOf(PropTypes.shape({})),
+  acf: PropTypes.shape({}),
 };
 
 Page.defaultProps = {
   basePath: 'pages/',
   products: undefined,
+  acf: undefined,
 };
 
 // This function gets called at build time
@@ -76,7 +81,7 @@ export async function getStaticProps({ params }) {
 
   const navItems = pages.map((item) => ({ title: item.title.rendered, id: item.id, slug: item.slug }));
 
-  const page = find(pages, ['slug', params.slug]);
+  const foundPage = find(pages, ['slug', params.slug]);
 
   let products;
   if (params.slug === 'products') {
@@ -92,18 +97,21 @@ export async function getStaticProps({ params }) {
       basePath: '',
       navItems,
       activeNav: params.slug,
-      page: { title: page.title.rendered, content: page.content.rendered },
+      page: { title: foundPage.title.rendered, content: foundPage.content.rendered },
       products,
     } };
   }
 
-  return { props: {
-    basePath: '',
-    navItems,
-    activeNav: params.slug,
-    page: { title: page.title.rendered, content: page.content.rendered },
-
-  } };
+  console.log('===acf====', foundPage.acf);
+  return {
+    props: {
+      basePath: '',
+      navItems,
+      activeNav: params.slug,
+      page: { title: foundPage.title.rendered, content: foundPage.content.rendered },
+      acf: foundPage.acf,
+    },
+  };
 }
 
 export default (Page);
