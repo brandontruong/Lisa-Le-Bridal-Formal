@@ -46,6 +46,7 @@ const Navigation = ({ navItems, activeNav, basePath }) => (
 
 Navigation.propTypes = {
   basePath: PropTypes.string,
+  activeNav: PropTypes.string.isRequired,
   navItems: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 

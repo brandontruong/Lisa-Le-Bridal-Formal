@@ -102,7 +102,6 @@ export async function getStaticProps({ params }) {
     } };
   }
 
-  console.log('===acf====', foundPage.acf);
   return {
     props: {
       basePath: '',
