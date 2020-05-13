@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Grid, Cell } from 'styled-css-grid';
 
 const StyledLI = styled.li`
   float: left
@@ -31,17 +32,35 @@ const StyledUI = styled.ul`
 `;
 
 const Navigation = ({ navItems, activeNav, basePath }) => (
-  <StyledUI>
-    { navItems.map((navItem) => (
-      <StyledLI key={`nav-${navItem.slug}`}>
-        <Link href={`${basePath}${navItem.slug}`}>
-          <StyledA isActive={activeNav === navItem.slug}>
-            {navItem.title}
-          </StyledA>
-        </Link>
-      </StyledLI>
-    ))}
-  </StyledUI>
+  <Grid
+    columns="auto auto"
+    justifyContent="space-between"
+  >
+    <Cell>
+      <hgroup id="logo">
+        <h1 id="site-title">
+          <a href="/" rel="home" className="hvr-buzz-out">
+            Lisa Le
+          </a>
+        </h1>
+        <h2 id="site-description">Bridal &amp; Formal</h2>
+      </hgroup>
+
+    </Cell>
+    <Cell>
+      <StyledUI>
+        { navItems.map((navItem) => (
+          <StyledLI key={`nav-${navItem.slug}`}>
+            <Link href={`${basePath}${navItem.slug}`}>
+              <StyledA isActive={activeNav === navItem.slug}>
+                {navItem.title}
+              </StyledA>
+            </Link>
+          </StyledLI>
+        ))}
+      </StyledUI>
+    </Cell>
+  </Grid>
 );
 
 Navigation.propTypes = {

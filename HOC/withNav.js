@@ -1,12 +1,15 @@
 import React from 'react';
 import fetch from 'node-fetch';
+import filter from 'lodash/filter';
+
+import baseApiUrl from '../utils/config';
 
 const withNav = (C) => {
   class NavComponent extends React.Component {
     static async getInitialProps(ctx) {
-      const res = await fetch('http://brandontruong.me/wp-json/wp/v2/pages');
-      const pages = await res.json();
-
+      const res = await fetch(`${baseApiUrl}pages`);
+      const allPages = await res.json();
+      const pages = filter(allPages, ({ slug }) => slug !== 'home');
       const navItems = pages.map((item) => ({ title: item.title.rendered, id: item.id, slug: item.slug }));
 
       // Get component’s props
