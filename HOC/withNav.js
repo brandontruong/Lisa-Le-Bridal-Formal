@@ -1,6 +1,7 @@
 import React from 'react';
 import fetch from 'node-fetch';
 import filter from 'lodash/filter';
+import orderBy from 'lodash/orderBy';
 
 import baseApiUrl from '../utils/config';
 
@@ -9,7 +10,7 @@ const withNav = (C) => {
     static async getInitialProps(ctx) {
       const res = await fetch(`${baseApiUrl}pages`);
       const allPages = await res.json();
-      const pages = filter(allPages, ({ slug }) => slug !== 'home');
+      const pages = orderBy(filter(allPages, ({ slug }) => slug !== 'home'), ['menu_order']);
       const navItems = pages.map((item) => ({ title: item.title.rendered, id: item.id, slug: item.slug }));
 
       // Get component’s props

@@ -5,6 +5,7 @@ import fetch from 'node-fetch';
 import find from 'lodash/find';
 import Head from 'next/head';
 import filter from 'lodash/filter';
+import orderBy from 'lodash/orderBy';
 
 import Layout from '../../components/Layout';
 import baseApiUrl from '../../utils/config';
@@ -81,10 +82,8 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const res = await fetch(`${baseApiUrl}pages`);
   const allPages = await res.json();
-
-  const pages = filter(allPages, ({ slug }) => slug !== 'home');
+  const pages = orderBy(filter(allPages, ({ slug }) => slug !== 'home'), ['menu_order']);
   const navItems = pages.map((item) => ({ title: item.title.rendered, id: item.id, slug: item.slug }));
-
   const foundPage = find(pages, ['slug', params.slug]);
 
   let products;
