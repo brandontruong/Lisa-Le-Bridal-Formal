@@ -65,6 +65,7 @@ const StyledLI = styled.li`
 const StyledA = styled.a`
   margin: 0 4px 15px;
   padding: 5px 12px;
+  cursor: pointer;
   display: block;
   color: #fff;
   text-decoration: none;
