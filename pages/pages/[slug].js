@@ -9,6 +9,7 @@ import orderBy from 'lodash/orderBy';
 
 import Layout from '../../components/Layout';
 import baseApiUrl from '../../utils/config';
+import ProductCards from '../../components/ProductCards';
 
 function Page({ page, navItems, activeNav, basePath, products, acf }) {
   const router = useRouter();
@@ -31,22 +32,12 @@ function Page({ page, navItems, activeNav, basePath, products, acf }) {
         { acf && acf.feature_image && (
           <p><img src={acf.feature_image.url} alt="feature" /></p>
         )}
-        { products && products.map((product) => (
-          <div>
-            <p>{product.title}</p>
-            <p><img src={product.picture} alt="product" /></p>
-            <p>
-              <span>Price: </span>
-              {`${product.price} AUD`}
-            </p>
-          </div>
-        )) }
+        { products && <ProductCards products={products} />}
       </div>
     </Layout>
 
   );
 }
-
 Page.propTypes = {
   page: PropTypes.node.isRequired,
   basePath: PropTypes.string,
