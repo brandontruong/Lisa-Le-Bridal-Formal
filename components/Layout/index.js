@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { initGA, logPageView } from '../../utils/analytics';
 
 import Footer from '../Footer';
 import Meta from '../Meta';
 import Navigataion from '../Navigation';
 
 export default function Layout({ basePath, navItems, activeNav, children }) {
+  useEffect(() => {
+    if (!window.GA_INITIALIZED) {
+      initGA();
+      window.GA_INITIALIZED = true;
+    }
+    logPageView();
+  }, []);
   return (
     <>
       <Meta />
