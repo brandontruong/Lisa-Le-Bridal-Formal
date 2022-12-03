@@ -39,7 +39,7 @@
     "react-dom": "^16.13.1",
     "react-ga": "^2.7.0",
     "react-number-format": "^4.4.1",
-    "styled-components": "^5.1.0",
+    "styled-components": "^5.3.6",
     "styled-css-grid": "^1.2.1",
     "swr": "^0.2.0"
   },
