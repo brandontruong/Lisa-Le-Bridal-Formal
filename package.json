@@ -41,7 +41,7 @@
     "react-number-format": "^4.4.1",
     "styled-components": "^5.1.0",
     "styled-css-grid": "^1.2.1",
-    "swr": "^0.2.0"
+    "swr": "^0.5.7"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
